@@ -1,0 +1,6 @@
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/WallStreet_Traders.dir
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/edit_cache.dir
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/rebuild_cache.dir
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/list_install_components.dir
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/install.dir
+D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/install/local.dir
