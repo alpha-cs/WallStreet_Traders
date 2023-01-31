@@ -1,2 +1,2 @@
 # WallStreet_Traders
-A stock market application for planning strategies and simulating trading algorithms
+A stock market application for planning strategies and simulating trading algorithms, allowing users to calculate hypothetical profits or losses based on historical data and mathematical indicators. The purpose of the stock market application is to provide traders with a powerful tool for planning and executing their trading strategies, using historical data and mathematical indicators to identify the best times to buy and sell. This project aims to help traders improve their performance and maximize their returns.
