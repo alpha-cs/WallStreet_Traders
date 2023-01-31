@@ -1,0 +1,9 @@
+# ninja log v5
+6	569	6968414544821036	CMakeFiles/WallStreet_Traders.dir/time_keeper.cpp.obj	3eb74ec8dcc202c0
+3	1060	6968414549707461	CMakeFiles/WallStreet_Traders.dir/WallStreet_Traders.cpp.obj	41d9b34b0a80ee60
+13	1098	6968414550097612	CMakeFiles/WallStreet_Traders.dir/load_sql_database.cpp.obj	1b1932ad02ddfafe
+1098	1917	6968414558305775	WallStreet_Traders.exe	59e87ffadf4a36b7
+3	68	0	CMakeFiles/install.util	7c0d412728386da0
+4	1220	6968414802873169	CMakeFiles/WallStreet_Traders.dir/WallStreet_Traders.cpp.obj	41d9b34b0a80ee60
+1221	2714	6968414817834405	WallStreet_Traders.exe	59e87ffadf4a36b7
+2	75	0	CMakeFiles/install.util	7c0d412728386da0
