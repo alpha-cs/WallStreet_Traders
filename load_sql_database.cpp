@@ -22,6 +22,9 @@ load_sql_database::load_sql_database()
 
 load_sql_database::~load_sql_database()
 {
+	delete sql_result;
+	delete sql_statement;
+	delete sql_connection;
 }
 
 void load_sql_database::make_sql_table()

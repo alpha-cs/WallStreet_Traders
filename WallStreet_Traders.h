@@ -5,3 +5,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
+#include <future>
+
+typedef uint8_t apikey_status;

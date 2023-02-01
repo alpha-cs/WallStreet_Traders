@@ -2,6 +2,7 @@
 
 #include "sql_headers.h"
 #include <bitset>
+#include <coroutine>
 
 #define sql_database "tdameritrade"
 #define sql_table_company_info "company_info"
