@@ -102,9 +102,11 @@ The MySQL Connector C++ x64 release version is already set in the CMakeLists.txt
     - [ ] Transition to Charles Schwab api once integration is complete
     - [ ] Get Price History
     - [ ] Get Search Instruments
+    - [ ] <Recommendations Welcomed>
 - [ ] Logging Stock Market Data
-    - [ ] Watchlist
-    - [ ] On start up, fill the missing data gap
+    - [ ] Watchlist database
+    - [ ] On start up, update database with missing data gap
+	- [ ] On start up, update update latest company data
 - [ ] Static Algorithms
     - [ ] 2
     - [ ] 5
