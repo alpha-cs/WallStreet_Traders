@@ -8,9 +8,10 @@
  * @brief Structure representing date and time.
  * yyyy MM DD HH mm ss
  */
-typedef struct DateTime {
+typedef struct DateTime
+{
     int year, month, day, hour = 0, minute = 0, second = 0;
-}DateTime;
+} DateTime;
 
 /**
  * @class time_keeper
@@ -27,11 +28,11 @@ class time_keeper
 public:
     time_keeper(bool);
     ~time_keeper();
-	
-    std::string date_to_unix_time(const DateTime& date);
-    std::string date_to_unix_time_pst(const DateTime& date);
-    std::string unix_time_to_date(const std::string& unix_time);
-	
+
+    std::string date_to_unix_time(const DateTime &date);
+    std::string date_to_unix_time_pst(const DateTime &date);
+    std::string unix_time_to_date(const std::string &unix_time);
+
 private:
     time_t start;
     bool show_time;

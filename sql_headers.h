@@ -14,7 +14,7 @@
 
 enum sql_tdameritrade_table
 {
-	company_info = 0,
+	company_fundamental = 0,
 	td_price_history_day,
 	td_price_history_minute,
 	sizeof_sql_tdameritrade_table
