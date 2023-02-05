@@ -50,16 +50,16 @@ The CXX compiler identification is MSVC, found in "D:/_Programs/WallStreet_Trade
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_5a587 && [1/2] Building C object CMakeFiles\cmTC_5a587.dir\CMakeCCompilerABI.c.obj
-[2/2] Linking C executable cmTC_5a587.exe
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_66654 && [1/2] Building C object CMakeFiles\cmTC_66654.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_66654.exe
 
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: D:/_Programs/WallStreet_Traders/out/build/x64-release/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_5d316 && [1/2] Building CXX object CMakeFiles\cmTC_5d316.dir\CMakeCXXCompilerABI.cpp.obj
-[2/2] Linking CXX executable cmTC_5d316.exe
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_ba815 && [1/2] Building CXX object CMakeFiles\cmTC_ba815.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX executable cmTC_ba815.exe
 
 
 

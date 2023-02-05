@@ -45,7 +45,7 @@ Here's why:
 <!-- GETTING STARTED -->
 ## Getting Started
 Before you run this application you will need to setup CMakeList.txt and create a TD Ameritrade account.
-
+Ensure that your user enviornment variable Path targets the location for "mysqlcppconn-9-vs14.dll" and "libcurl.dll".
 ### Prerequisites
 
 #### TD Ameritrade
