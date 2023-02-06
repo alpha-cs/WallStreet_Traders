@@ -7,6 +7,7 @@
 #include "cppconn/prepared_statement.h"
 
 // for demonstration only. never save password in the code!
+// Also I couldnt be bothered to implemetn the key loader here. But you can and submit a pull request.
 #define mysql_Host "localhost"     // server host
 #define mysql_User "root"          // server user
 #define mysql_Password "5662"      // server password | This is my name in number format. :)

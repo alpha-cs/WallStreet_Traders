@@ -7,7 +7,9 @@ load_sql_database::load_sql_database()
 		this->sql_driver = get_driver_instance();
 		this->sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
 		sql_table_status = check_sql_tables();
-		if (sql_table_status != 0x00000111)
+		dbStatus required_table_status = get_required_table_status();
+		
+		if (sql_table_status != required_table_status)
 		{
 			std::cout << "Missing tables. Creating tables..." << std::endl;
 			make_sql_table();
@@ -82,6 +84,16 @@ dbStatus load_sql_database::check_table(const std::string &table_name)
 		exit(1);
 	}
 	return 0;
+}
+
+dbStatus load_sql_database::get_required_table_status()
+{
+	dbStatus required_table_status = 0;
+	for (int i = 0; i < sizeof_sql_tdameritrade_table; i++)
+	{
+		required_table_status |= (1 << i);
+	}
+	return required_table_status;
 }
 
 dbStatus load_sql_database::check_company_fundamental()

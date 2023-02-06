@@ -268,6 +268,9 @@ Z_VCPKG_PWSH_PATH:FILEPATH=Z_VCPKG_PWSH_PATH-NOTFOUND
 // triplet
 _VCPKG_INSTALLED_DIR:PATH=D:/_Programs/github_builds/vcpkg/installed
 
+//The directory containing a CMake configuration file for jsoncpp.
+jsoncpp_DIR:PATH=D:/_Programs/github_builds/vcpkg/installed/x64-windows/share/jsoncpp
+
 
 ########################
 # INTERNAL cache entries

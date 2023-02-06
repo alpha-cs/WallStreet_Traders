@@ -38,6 +38,8 @@ Here's why:
 * C/C++
 * CMake
 * CURL
+* Jsoncpp
+* vcpkg
 * MySQL Connector C++
 * TD Ameritrade Dev API
 * MSVC
@@ -45,7 +47,7 @@ Here's why:
 <!-- GETTING STARTED -->
 ## Getting Started
 Before you run this application you will need to setup CMakeList.txt and create a TD Ameritrade account.
-Ensure that your user enviornment variable Path targets the location for "mysqlcppconn-9-vs14.dll" and "libcurl.dll".
+Ensure that your user enviornment variable Path targets the location for dll files. They can be found in the build folder "WallStreet_traders/builds/dll".
 ### Prerequisites
 
 #### TD Ameritrade
@@ -53,10 +55,10 @@ Ensure that your user enviornment variable Path targets the location for "mysqlc
 Go to https://developer.tdameritrade.com/apis and request access to the API.
 Create an app to get your own APIKEY. Make sure to make this key never expire and use "http://localhost" as the URL CALLBACK unless you know what you are doing. Becuase I don't.
 
-#### CURL
-* libcurl build
-You will need msvc command prompt to build curl static library.
-1. Open MSVC x64 or x86 Cross Tool Command Prompt
+#### vcpkg
+* vcpkg is a C++ library manager that simplifies installation for jsoncpp, curl
+* Install vcpkg by following the instructions on
+1. Open MSVC x64 or x86 Cross Tool Command Prompt for whatever version you want.
 2. Clone the vcpkg repository and build curl static library
 ```sh
   git clone https://github.com/Microsoft/vcpkg.git
@@ -70,6 +72,8 @@ You will need msvc command prompt to build curl static library.
 ```sh
   vcpkg.exe integrate install
   ```  
+
+#### CURL
 * curl x64 Installation  
 ```sh
   vcpkg.exe install curl:x64-windows
@@ -79,6 +83,16 @@ You will need msvc command prompt to build curl static library.
   vcpkg.exe install curl:[tool]
   ``` 
 3. Once build replace the CMakeLists.txt with your vcpkg path, for example: include("D:/_Programs/github_builds/vcpkg/scripts/buildsystems/vcpkg.cmake")
+
+#### Jsoncpp
+* Jsoncpp x64 Installation 
+```sh
+  vcpkg.exe install jsoncpp:x64-windows
+  ``` 
+* Jsoncpp x86 Installation
+```sh
+  vcpkg.exe install jsoncpp
+  ```
   
 #### MySQL
 **You must create database "tdameritrade" to store tables**

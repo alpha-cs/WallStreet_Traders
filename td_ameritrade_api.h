@@ -4,6 +4,7 @@
 #include <string>
 #include <curl/curl.h>
 #include "time_keeper.h"
+#include "load_keys.h"
 
 class td_ameritrade_api
 {
@@ -16,6 +17,11 @@ public:
 	std::string build_url_get_price_history(std::string symbol, std::string apikey, std::string startDate, std::string endDate);
 	std::string build_url_get_price_history(std::string symbol, std::string apikey, std::string endDate);
 
+	//testing
+	void test_http_request_get_price_history(bool);
+	void test_http_request_get_search_instruments(bool);
+	
 private:
 	const std::string base_url = "https://api.tdameritrade.com/v1/marketdata/";
+	std::string api_key;
 };

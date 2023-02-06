@@ -23,10 +23,11 @@ public:
 	dbStatus check_td_price_history_minute();
 
 	dbStatus check_table(const std::string &table_name);
+	dbStatus get_required_table_status();
 
 private:
 	dbStatus sql_table_status = 0x00;
-
+	
 	sql::Driver *sql_driver;
 	sql::Connection *sql_connection;
 	sql::PreparedStatement *sql_statement;

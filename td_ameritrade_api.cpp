@@ -5,6 +5,8 @@
  */
 td_ameritrade_api::td_ameritrade_api()
 {
+	load_keys keys;
+	api_key = keys.get_td_apikey();
 }
 
 /**
@@ -108,4 +110,66 @@ std::string td_ameritrade_api::build_url_get_price_history(std::string symbol, s
 std::string td_ameritrade_api::build_url_get_price_history(std::string symbol, std::string apikey, std::string startDate, std::string endDate)
 {
     return base_url + symbol + "/pricehistory?apikey=" + apikey + "&periodType=day&frequencyType=minute&frequency=1&endDate=" + endDate + "&startDate=" + startDate + "&needExtendedHoursData=true";
+}
+
+//testing
+void td_ameritrade_api::test_http_request_get_price_history(bool show)
+{
+    td_ameritrade_api api_http_request_test;
+    time_keeper unix_time(0);
+
+    DateTime* end_datetime = new DateTime[3];
+    DateTime* start_datetime = new DateTime[3];
+
+    end_datetime[0].year = 2023;
+    end_datetime[0].month = 1;
+    end_datetime[0].day = 24;
+    end_datetime[0].hour = 0;
+    end_datetime[0].minute = 0;
+    end_datetime[0].second = 0;
+    start_datetime[0].year = 2023;
+    start_datetime[0].month = 1;
+    start_datetime[0].day = 23;
+    start_datetime[0].hour = 0;
+    start_datetime[0].minute = 0;
+    start_datetime[0].second = 0;
+
+    end_datetime[1].year = 2023;
+    end_datetime[1].month = 1;
+    end_datetime[1].day = 18;
+    start_datetime[1].year = 2023;
+    start_datetime[1].month = 1;
+    start_datetime[1].day = 17;
+
+    end_datetime[2].year = 2023;
+    end_datetime[2].month = 1;
+    end_datetime[2].day = 10;
+    start_datetime[2].year = 2023;
+    start_datetime[2].month = 1;
+    start_datetime[2].day = 9;
+
+    for (int i = 0; i < 3; i++)
+    {
+        std::string end_unix = unix_time.date_to_unix_time_pst(end_datetime[i]);
+        std::string start_unix = unix_time.date_to_unix_time_pst(start_datetime[i]);
+
+        std::string price_history = api_http_request_test.get_price_history("META", api_key, start_unix, end_unix);
+        if (show)
+        {
+            std::cout << price_history << std::endl;
+        }
+    }
+
+    delete[] end_datetime;
+    delete[] start_datetime;
+}
+
+void td_ameritrade_api::test_http_request_get_search_instruments(bool show)
+{
+    td_ameritrade_api api_http_request_test;
+    std::string instruments = api_http_request_test.get_search_instruments("META", api_key);
+    if (show)
+    {
+        std::cout << instruments << std::endl;
+    }
 }
