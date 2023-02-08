@@ -7,7 +7,7 @@ sql_data_logger::sql_data_logger()
 		this->sql_driver = get_driver_instance();
 		this->sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
 	}
-	catch (const std::exception& e)
+	catch (const std::exception &e)
 	{
 		std::cerr << e.what() << '\n';
 		exit(1);
@@ -21,66 +21,133 @@ sql_data_logger::~sql_data_logger()
 	delete sql_connection;
 }
 
-void sql_data_logger::store_data_to_db(const std::string& response)
+void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, const std::string &response)
 {
 	// Parse JSON response
 	Json::Value root;
 	Json::Reader reader;
-	if (!reader.parse(response, root)) {
+	if (!reader.parse(response, root))
+	{
 		std::cerr << "Failed to parse response: " << reader.getFormattedErrorMessages() << std::endl;
 		return;
 	}
 
-	// Extract values from JSON response	
-	metadata.cusip = root["META"]["cusip"].asString();
-	metadata.symbol = root["META"]["symbol"].asString();
-	metadata.description = root["META"]["description"].asString();
-	metadata.exchange = root["META"]["exchange"].asString();
-	metadata.assetType = root["META"]["assetType"].asString();
-	metadata.high52 = root["META"]["fundamental"]["high52"].asDouble();
-	metadata.low52 = root["META"]["fundamental"]["low52"].asDouble();
-	metadata.dividendAmount = root["META"]["fundamental"]["dividendAmount"].asDouble();
-	metadata.dividendYield = root["META"]["fundamental"]["dividendYield"].asDouble();
-	metadata.dividendDate = root["META"]["fundamental"]["dividendDate"].asString();
-	metadata.peRatio = root["META"]["fundamental"]["peRatio"].asDouble();
-	metadata.pegRatio = root["META"]["fundamental"]["pegRatio"].asDouble();
-	metadata.pbRatio = root["META"]["fundamental"]["pbRatio"].asDouble();
-	metadata.prRatio = root["META"]["fundamental"]["prRatio"].asDouble();
-	metadata.pcfRatio = root["META"]["fundamental"]["pcfRatio"].asDouble();
-	metadata.grossMarginTTM = root["META"]["fundamental"]["grossMarginTTM"].asDouble();
-	metadata.grossMarginMRQ = root["META"]["fundamental"]["grossMarginMRQ"].asDouble();
-	metadata.netProfitMarginTTM = root["META"]["fundamental"]["netProfitMarginTTM"].asDouble();
-	metadata.netProfitMarginMRQ = root["META"]["fundamental"]["netProfitMarginMRQ"].asDouble();
-	metadata.operatingMarginTTM = root["META"]["fundamental"]["operatingMarginTTM"].asDouble();
-	metadata.operatingMarginMRQ = root["META"]["fundamental"]["operatingMarginMRQ"].asDouble();
-	metadata.returnOnEquity = root["META"]["fundamental"]["returnOnEquity"].asDouble();
-	metadata.returnOnAssets = root["META"]["fundamental"]["returnOnAssets"].asDouble();
-	metadata.returnOnInvestment = root["META"]["fundamental"]["returnOnInvestment"].asDouble();
-	metadata.quickRatio = root["META"]["fundamental"]["quickRatio"].asDouble();
-	metadata.currentRatio = root["META"]["fundamental"]["currentRatio"].asDouble();
-	metadata.interestCoverage = root["META"]["fundamental"]["interestCoverage"].asDouble();
-	metadata.totalDebtToCapital = root["META"]["fundamental"]["totalDebtToCapital"].asDouble();
-	metadata.ltDebtToEquity = root["META"]["fundamental"]["ltDebtToEquity"].asDouble();
-	metadata.totalDebtToEquity = root["META"]["fundamental"]["totalDebtToEquity"].asDouble();
-	metadata.epsTTM = root["META"]["fundamental"]["epsTTM"].asDouble();
-	metadata.epsChangePercentTTM = root["META"]["fundamental"]["epsChangePercentTTM"].asDouble();
-	metadata.epsChangeYear = root["META"]["fundamental"]["epsChangeYear"].asDouble();
-	metadata.epsChange = root["META"]["fundamental"]["epsChange"].asDouble();
-	metadata.revChangeYear = root["META"]["fundamental"]["revChangeYear"].asDouble();
-	metadata.revChangeTTM = root["META"]["fundamental"]["revChangeTTM"].asDouble();
-	metadata.revChangeIn = root["META"]["fundamental"]["revChangeIn"].asDouble();
-	metadata.sharesOutstanding = root["META"]["fundamental"]["sharesOutstanding"].asDouble();
-	metadata.marketCapFloat = root["META"]["fundamental"]["marketCapFloat"].asDouble();
-	metadata.marketCap = root["META"]["fundamental"]["marketCap"].asDouble();
-	metadata.bookValuePerShare = root["META"]["fundamental"]["bookValuePerShare"].asDouble();
-	metadata.shortIntToFloat = root["META"]["fundamental"]["shortIntToFloat"].asDouble();
-	metadata.shortIntDayToCover = root["META"]["fundamental"]["shortIntDayToCover"].asDouble();
-	metadata.divGrowthRate3Year = root["META"]["fundamental"]["divGrowthRate3Year"].asDouble();
-	metadata.dividendPayAmount = root["META"]["fundamental"]["dividendPayAmount"].asDouble();
-	metadata.dividendPayDate = root["META"]["fundamental"]["dividendPayDate"].asString();
-	metadata.beta = root["META"]["fundamental"]["beta"].asDouble();
-	metadata.vol1DayAvg = root["META"]["fundamental"]["vol1DayAvg"].asDouble();
-	metadata.vol10DayAvg = root["META"]["fundamental"]["vol10DayAvg"].asDouble();
-	metadata.vol3MonthAvg = root["META"]["fundamental"]["vol3MonthAvg"].asDouble();
-	
+	// Extract values from JSON response
+	metadata.cusip = root[metadata_symbol]["cusip"].asString();
+	metadata.symbol = root[metadata_symbol]["symbol"].asString();
+	metadata.description = root[metadata_symbol]["description"].asString();
+	metadata.exchange = root[metadata_symbol]["exchange"].asString();
+	metadata.assetType = root[metadata_symbol]["assetType"].asString();
+	metadata.high52 = root[metadata_symbol]["fundamental"]["high52"].asDouble();
+	metadata.low52 = root[metadata_symbol]["fundamental"]["low52"].asDouble();
+	metadata.dividendAmount = root[metadata_symbol]["fundamental"]["dividendAmount"].asDouble();
+	metadata.dividendYield = root[metadata_symbol]["fundamental"]["dividendYield"].asDouble();
+	metadata.dividendDate = root[metadata_symbol]["fundamental"]["dividendDate"].asString();
+	metadata.peRatio = root[metadata_symbol]["fundamental"]["peRatio"].asDouble();
+	metadata.pegRatio = root[metadata_symbol]["fundamental"]["pegRatio"].asDouble();
+	metadata.pbRatio = root[metadata_symbol]["fundamental"]["pbRatio"].asDouble();
+	metadata.prRatio = root[metadata_symbol]["fundamental"]["prRatio"].asDouble();
+	metadata.pcfRatio = root[metadata_symbol]["fundamental"]["pcfRatio"].asDouble();
+	metadata.grossMarginTTM = root[metadata_symbol]["fundamental"]["grossMarginTTM"].asDouble();
+	metadata.grossMarginMRQ = root[metadata_symbol]["fundamental"]["grossMarginMRQ"].asDouble();
+	metadata.netProfitMarginTTM = root[metadata_symbol]["fundamental"]["netProfitMarginTTM"].asDouble();
+	metadata.netProfitMarginMRQ = root[metadata_symbol]["fundamental"]["netProfitMarginMRQ"].asDouble();
+	metadata.operatingMarginTTM = root[metadata_symbol]["fundamental"]["operatingMarginTTM"].asDouble();
+	metadata.operatingMarginMRQ = root[metadata_symbol]["fundamental"]["operatingMarginMRQ"].asDouble();
+	metadata.returnOnEquity = root[metadata_symbol]["fundamental"]["returnOnEquity"].asDouble();
+	metadata.returnOnAssets = root[metadata_symbol]["fundamental"]["returnOnAssets"].asDouble();
+	metadata.returnOnInvestment = root[metadata_symbol]["fundamental"]["returnOnInvestment"].asDouble();
+	metadata.quickRatio = root[metadata_symbol]["fundamental"]["quickRatio"].asDouble();
+	metadata.currentRatio = root[metadata_symbol]["fundamental"]["currentRatio"].asDouble();
+	metadata.interestCoverage = root[metadata_symbol]["fundamental"]["interestCoverage"].asDouble();
+	metadata.totalDebtToCapital = root[metadata_symbol]["fundamental"]["totalDebtToCapital"].asDouble();
+	metadata.ltDebtToEquity = root[metadata_symbol]["fundamental"]["ltDebtToEquity"].asDouble();
+	metadata.totalDebtToEquity = root[metadata_symbol]["fundamental"]["totalDebtToEquity"].asDouble();
+	metadata.epsTTM = root[metadata_symbol]["fundamental"]["epsTTM"].asDouble();
+	metadata.epsChangePercentTTM = root[metadata_symbol]["fundamental"]["epsChangePercentTTM"].asDouble();
+	metadata.epsChangeYear = root[metadata_symbol]["fundamental"]["epsChangeYear"].asDouble();
+	metadata.epsChange = root[metadata_symbol]["fundamental"]["epsChange"].asDouble();
+	metadata.revChangeYear = root[metadata_symbol]["fundamental"]["revChangeYear"].asDouble();
+	metadata.revChangeTTM = root[metadata_symbol]["fundamental"]["revChangeTTM"].asDouble();
+	metadata.revChangeIn = root[metadata_symbol]["fundamental"]["revChangeIn"].asDouble();
+	metadata.sharesOutstanding = root[metadata_symbol]["fundamental"]["sharesOutstanding"].asDouble();
+	metadata.marketCapFloat = root[metadata_symbol]["fundamental"]["marketCapFloat"].asDouble();
+	metadata.marketCap = root[metadata_symbol]["fundamental"]["marketCap"].asDouble();
+	metadata.bookValuePerShare = root[metadata_symbol]["fundamental"]["bookValuePerShare"].asDouble();
+	metadata.shortIntToFloat = root[metadata_symbol]["fundamental"]["shortIntToFloat"].asDouble();
+	metadata.shortIntDayToCover = root[metadata_symbol]["fundamental"]["shortIntDayToCover"].asDouble();
+	metadata.divGrowthRate3Year = root[metadata_symbol]["fundamental"]["divGrowthRate3Year"].asDouble();
+	metadata.dividendPayAmount = root[metadata_symbol]["fundamental"]["dividendPayAmount"].asDouble();
+	metadata.dividendPayDate = root[metadata_symbol]["fundamental"]["dividendPayDate"].asString();
+	metadata.beta = root[metadata_symbol]["fundamental"]["beta"].asDouble();
+	metadata.vol1DayAvg = root[metadata_symbol]["fundamental"]["vol1DayAvg"].asDouble();
+	metadata.vol10DayAvg = root[metadata_symbol]["fundamental"]["vol10DayAvg"].asDouble();
+	metadata.vol3MonthAvg = root[metadata_symbol]["fundamental"]["vol3MonthAvg"].asDouble();
+
+	fundamentalsLogger(metadata);
+}
+
+void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
+{
+	try
+	{
+		this->sql_statement = this->sql_connection->prepareStatement(fundamentalQuery);
+		sql_statement->setString(1, metadata.cusip);
+		sql_statement->setString(2, metadata.symbol);
+		sql_statement->setString(3, metadata.description);
+		sql_statement->setString(4, metadata.exchange);
+		sql_statement->setString(5, metadata.assetType);
+		sql_statement->setDouble(6, metadata.high52);
+		sql_statement->setDouble(7, metadata.low52);
+		sql_statement->setDouble(8, metadata.dividendAmount);
+		sql_statement->setDouble(9, metadata.dividendYield);
+		sql_statement->setString(10, metadata.dividendDate);
+		sql_statement->setDouble(11, metadata.peRatio);
+		sql_statement->setDouble(12, metadata.pegRatio);
+		sql_statement->setDouble(13, metadata.pbRatio);
+		sql_statement->setDouble(14, metadata.prRatio);
+		sql_statement->setDouble(15, metadata.pcfRatio);
+		sql_statement->setDouble(16, metadata.grossMarginTTM);
+		sql_statement->setDouble(17, metadata.grossMarginMRQ);
+		sql_statement->setDouble(18, metadata.netProfitMarginTTM);
+		sql_statement->setDouble(19, metadata.netProfitMarginMRQ);
+		sql_statement->setDouble(20, metadata.operatingMarginTTM);
+		sql_statement->setDouble(21, metadata.operatingMarginMRQ);
+		sql_statement->setDouble(22, metadata.returnOnEquity);
+		sql_statement->setDouble(23, metadata.returnOnAssets);
+		sql_statement->setDouble(24, metadata.returnOnInvestment);
+		sql_statement->setDouble(25, metadata.quickRatio);
+		sql_statement->setDouble(26, metadata.currentRatio);
+		sql_statement->setDouble(27, metadata.interestCoverage);
+		sql_statement->setDouble(28, metadata.totalDebtToCapital);
+		sql_statement->setDouble(29, metadata.ltDebtToEquity);
+		sql_statement->setDouble(30, metadata.totalDebtToEquity);
+		sql_statement->setDouble(31, metadata.epsTTM);
+		sql_statement->setDouble(32, metadata.epsChangePercentTTM);
+		sql_statement->setDouble(33, metadata.epsChangeYear);
+		sql_statement->setDouble(34, metadata.epsChange);
+		sql_statement->setDouble(35, metadata.revChangeYear);
+		sql_statement->setDouble(36, metadata.revChangeTTM);
+		sql_statement->setDouble(37, metadata.revChangeIn);
+		sql_statement->setDouble(38, metadata.sharesOutstanding);
+		sql_statement->setDouble(39, metadata.marketCapFloat);
+		sql_statement->setDouble(40, metadata.marketCap);
+		sql_statement->setDouble(41, metadata.bookValuePerShare);
+		sql_statement->setDouble(42, metadata.shortIntToFloat);
+		sql_statement->setDouble(43, metadata.shortIntDayToCover);
+		sql_statement->setDouble(44, metadata.divGrowthRate3Year);
+		sql_statement->setDouble(45, metadata.dividendPayAmount);
+		sql_statement->setString(46, metadata.dividendPayDate);
+		sql_statement->setDouble(47, metadata.beta);
+		sql_statement->setDouble(48, metadata.vol1DayAvg);
+		sql_statement->setDouble(49, metadata.vol10DayAvg);
+		sql_statement->setDouble(50, metadata.vol3MonthAvg);
+		sql_statement->execute();
+	}
+	catch (const std::exception &e)
+	{
+		// Print an error message and exit the program if there is a failure.
+		std::cerr << "Failed to execute fundamentalsLogger query: " << e.what() << std::endl;
+		exit(1);
+	}
 }
