@@ -4,8 +4,8 @@ load_sql_database::load_sql_database()
 {
 	try
 	{
-		this->sql_driver = get_driver_instance();
-		this->sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
+		sql_driver = get_driver_instance();
+		sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
 		sql_table_status = check_sql_tables();
 		dbStatus required_table_status = get_required_table_status();
 		
@@ -60,8 +60,8 @@ dbStatus load_sql_database::check_table(const std::string &table_name)
 	{
 		// Create the query string to check if the table already exists.
 		std::string checkQuery = "SHOW TABLES FROM " + (std::string)sql_database + " LIKE '" + table_name + "'";
-		this->sql_statement = sql_connection->prepareStatement(checkQuery);
-		this->sql_result = sql_statement->executeQuery();
+		sql_statement = sql_connection->prepareStatement(checkQuery);
+		sql_result = sql_statement->executeQuery();
 		if (sql_result->next())
 		{
 			if (table_name == "company_fundamental")

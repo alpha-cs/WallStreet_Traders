@@ -14,6 +14,7 @@ td_ameritrade_api::td_ameritrade_api()
  */
 td_ameritrade_api::~td_ameritrade_api()
 {
+	
 }
 
 /**
@@ -148,12 +149,13 @@ void td_ameritrade_api::test_http_request_get_price_history(bool show)
     start_datetime[2].month = 1;
     start_datetime[2].day = 9;
 
+    std::string price_history;
     for (int i = 0; i < 3; i++)
     {
         std::string end_unix = unix_time.date_to_unix_time_pst(end_datetime[i]);
         std::string start_unix = unix_time.date_to_unix_time_pst(start_datetime[i]);
 
-        std::string price_history = api_http_request_test.get_price_history("META", api_key, start_unix, end_unix);
+        price_history = api_http_request_test.get_price_history("META", api_key, start_unix, end_unix);
         if (show)
         {
             std::cout << price_history << std::endl;
@@ -164,7 +166,7 @@ void td_ameritrade_api::test_http_request_get_price_history(bool show)
     delete[] start_datetime;
 }
 
-void td_ameritrade_api::test_http_request_get_search_instruments(bool show)
+std::string td_ameritrade_api::test_http_request_get_search_instruments(bool show)
 {
     td_ameritrade_api api_http_request_test;
     std::string instruments = api_http_request_test.get_search_instruments("META", api_key);
@@ -172,4 +174,6 @@ void td_ameritrade_api::test_http_request_get_search_instruments(bool show)
     {
         std::cout << instruments << std::endl;
     }
+
+	return instruments;
 }

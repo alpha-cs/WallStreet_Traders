@@ -8,9 +8,6 @@ void intro();
 int main(int, char **)
 {
     time_keeper timer(1);
-	
-
-
     intro();
     auto database_future = std::async(std::launch::async, []
                                       {
@@ -20,8 +17,11 @@ int main(int, char **)
 
 	//functionality
 
+
 	td_ameritrade_api api;
-    api.test_http_request_get_search_instruments(1);
+    std::string response = api.test_http_request_get_search_instruments(1);
+	sql_data_logger logger;
+    logger.fundamentalsHandler("META", response);
 	
 
     return 0;

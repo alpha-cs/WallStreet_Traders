@@ -4,8 +4,8 @@ sql_data_logger::sql_data_logger()
 {
 	try
 	{
-		this->sql_driver = get_driver_instance();
-		this->sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
+		sql_driver = get_driver_instance();
+		sql_connection = sql_driver->connect(mysql_Host, mysql_User, mysql_Password);
 	}
 	catch (const std::exception &e)
 	{
@@ -17,8 +17,8 @@ sql_data_logger::sql_data_logger()
 sql_data_logger::~sql_data_logger()
 {
 	delete sql_result;
-	delete sql_statement;
 	delete sql_connection;
+	delete sql_statement;
 }
 
 void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, const std::string &response)
@@ -85,13 +85,15 @@ void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, con
 	metadata.vol3MonthAvg = root[metadata_symbol]["fundamental"]["vol3MonthAvg"].asDouble();
 
 	fundamentalsLogger(metadata);
+	
 }
 
 void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
 {
+	std::cout << "metadata = " << metadata.cusip << std::endl;
 	try
 	{
-		this->sql_statement = this->sql_connection->prepareStatement(fundamentalQuery);
+		sql_statement = sql_connection->prepareStatement(fundamentalQuery);
 		sql_statement->setString(1, metadata.cusip);
 		sql_statement->setString(2, metadata.symbol);
 		sql_statement->setString(3, metadata.description);
@@ -143,11 +145,15 @@ void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
 		sql_statement->setDouble(49, metadata.vol10DayAvg);
 		sql_statement->setDouble(50, metadata.vol3MonthAvg);
 		sql_statement->execute();
+		sql_result = sql_statement->getResultSet();
 	}
-	catch (const std::exception &e)
+	catch (sql::SQLException& e)
 	{
-		// Print an error message and exit the program if there is a failure.
-		std::cerr << "Failed to execute fundamentalsLogger query: " << e.what() << std::endl;
-		exit(1);
+		std::cout << "# ERR: SQLException in " << __FILE__;
+		std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
+		std::cout << "# ERR: " << e.what();
+		std::cout << " (MySQL error code: " << e.getErrorCode();
+		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
 	}
+	std::cout << std::endl;
 }

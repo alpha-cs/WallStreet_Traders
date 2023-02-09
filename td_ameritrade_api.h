@@ -19,7 +19,7 @@ public:
 
 	//testing
 	void test_http_request_get_price_history(bool);
-	void test_http_request_get_search_instruments(bool);
+	std::string test_http_request_get_search_instruments(bool);
 	
 private:
 	const std::string base_url = "https://api.tdameritrade.com/v1/marketdata/";

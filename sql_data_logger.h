@@ -65,7 +65,7 @@ public:
 	sql_data_logger();
 	~sql_data_logger();
 	void fundamentalsHandler(const std::string metadata_symbol, const std::string& response);
-	void fundamentalsLogger(Fundamental &metadata);
+	void fundamentalsLogger(Fundamental& metadata);
 
 private:
 	sql::Driver* sql_driver;
@@ -74,5 +74,5 @@ private:
 	sql::ResultSet* sql_result;
 
 	Fundamental metadata;
-	const std::string fundamentalQuery = "INSERT INTO tdameritrade.company_fundamental (cusip, symbol, description, exchange, assetType, high52, low52, dividendAmount, dividendYield, dividendDate, peRatio, pegRatio, pbRatio, prRatio, pcfRatio, grossMarginTTM, grossMarginMRQ, netProfitMarginTTM, netProfitMarginMRQ, operatingMarginTTM, operatingMarginMRQ, returnOnEquity, returnOnAssets, returnOnInvestment, quickRatio, currentRatio, interestCoverage, totalDebtToCapital, ltDebtToEquity, totalDebtToEquity, epsTTM, epsChangePercentTTM, epsChangeYear, epsChange, revChangeYear, revChangeTTM, revChangeIn, sharesOutstanding, marketCapFloat, marketCap, bookValuePerShare, shortIntToFloat, shortIntDayToCover, divGrowthRate3Year, dividendPayAmount, dividendPayDate, beta, vol1DayAvg, vol10DayAvg, vol3MonthAvg) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	const std::string fundamentalQuery = "INSERT INTO `tdameritrade`.`company_fundamental` (`cusip`, `symbol`, `description`, `exchange`, `assetType`, `high52`, `low52`, `dividendAmount`, `dividendYield`, `dividendDate`, `peRatio`, `pegRatio`, `pbRatio`, `prRatio`, `pcfRatio`, `grossMarginTTM`, `grossMarginMRQ`, `netProfitMarginTTM`, `netProfitMarginMRQ`, `operatingMarginTTM`, `operatingMarginMRQ`, `returnOnEquity`, `returnOnAssets`, `returnOnInvestment`, `quickRatio`, `currentRatio`, `interestCoverage`, `totalDebtToCapital`, `ltDebtToEquity`, `totalDebtToEquity`, `epsTTM`, `epsChangePercentTTM`, `epsChangeYear`, `epsChange`, `revChangeYear`, `revChangeTTM`, `revChangeIn`, `sharesOutstanding`, `marketCapFloat`, `marketCap`, `bookValuePerShare`, `shortIntToFloat`, `shortIntDayToCover`, `divGrowthRate3Year`, `dividendPayAmount`, `dividendPayDate`, `beta`, `vol1DayAvg`, `vol10DayAvg`, `vol3MonthAvg`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 };
