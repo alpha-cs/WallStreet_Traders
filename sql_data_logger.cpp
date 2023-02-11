@@ -21,6 +21,21 @@ sql_data_logger::~sql_data_logger()
 	delete sql_statement;
 }
 
+void sql_data_logger::reset_auto_increment(std::string table)
+{
+	try
+	{
+		std::string query = "ALTER TABLE " + table + " AUTO_INCREMENT = 1";
+		sql_statement = sql_connection->prepareStatement(query);
+		sql_statement->execute();
+	}
+	catch (const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		exit(1);
+	}
+}
+
 void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, const std::string &response)
 {
 	// Parse JSON response
@@ -90,7 +105,7 @@ void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, con
 
 void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
 {
-	std::cout << "metadata = " << metadata.cusip << std::endl;
+	reset_auto_increment("`tdameritrade`.`company_fundamental`");
 	try
 	{
 		sql_statement = sql_connection->prepareStatement(fundamentalQuery);

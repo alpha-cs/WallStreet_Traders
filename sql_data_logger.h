@@ -65,7 +65,9 @@ public:
 	sql_data_logger();
 	~sql_data_logger();
 	void fundamentalsHandler(const std::string metadata_symbol, const std::string& response);
+	void priceHistoryHandler();
 	void fundamentalsLogger(Fundamental& metadata);
+	void priceHistoryLogger();
 
 private:
 	sql::Driver* sql_driver;
@@ -73,6 +75,7 @@ private:
 	sql::PreparedStatement* sql_statement;
 	sql::ResultSet* sql_result;
 
+	void reset_auto_increment(std::string table);
 	Fundamental metadata;
 	const std::string fundamentalQuery = "INSERT INTO `tdameritrade`.`company_fundamental` (`cusip`, `symbol`, `description`, `exchange`, `assetType`, `high52`, `low52`, `dividendAmount`, `dividendYield`, `dividendDate`, `peRatio`, `pegRatio`, `pbRatio`, `prRatio`, `pcfRatio`, `grossMarginTTM`, `grossMarginMRQ`, `netProfitMarginTTM`, `netProfitMarginMRQ`, `operatingMarginTTM`, `operatingMarginMRQ`, `returnOnEquity`, `returnOnAssets`, `returnOnInvestment`, `quickRatio`, `currentRatio`, `interestCoverage`, `totalDebtToCapital`, `ltDebtToEquity`, `totalDebtToEquity`, `epsTTM`, `epsChangePercentTTM`, `epsChangeYear`, `epsChange`, `revChangeYear`, `revChangeTTM`, `revChangeIn`, `sharesOutstanding`, `marketCapFloat`, `marketCap`, `bookValuePerShare`, `shortIntToFloat`, `shortIntDayToCover`, `divGrowthRate3Year`, `dividendPayAmount`, `dividendPayDate`, `beta`, `vol1DayAvg`, `vol10DayAvg`, `vol3MonthAvg`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 };

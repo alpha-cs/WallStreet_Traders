@@ -114,7 +114,7 @@ std::string td_ameritrade_api::build_url_get_price_history(std::string symbol, s
 }
 
 //testing
-void td_ameritrade_api::test_http_request_get_price_history(bool show)
+std::string td_ameritrade_api::test_http_request_get_price_history(bool show)
 {
     td_ameritrade_api api_http_request_test;
     time_keeper unix_time(0);
@@ -164,6 +164,7 @@ void td_ameritrade_api::test_http_request_get_price_history(bool show)
 
     delete[] end_datetime;
     delete[] start_datetime;
+	return price_history;
 }
 
 std::string td_ameritrade_api::test_http_request_get_search_instruments(bool show)

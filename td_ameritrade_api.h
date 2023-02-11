@@ -18,7 +18,7 @@ public:
 	std::string build_url_get_price_history(std::string symbol, std::string apikey, std::string endDate);
 
 	//testing
-	void test_http_request_get_price_history(bool);
+	std::string test_http_request_get_price_history(bool);
 	std::string test_http_request_get_search_instruments(bool);
 	
 private:

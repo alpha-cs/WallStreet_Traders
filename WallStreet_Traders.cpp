@@ -19,9 +19,11 @@ int main(int, char **)
 
 
 	td_ameritrade_api api;
-    std::string response = api.test_http_request_get_search_instruments(1);
+    //std::string response = api.test_http_request_get_search_instruments(0);
+    std::string response = api.test_http_request_get_price_history(1);
 	sql_data_logger logger;
-    logger.fundamentalsHandler("META", response);
+    //logger.fundamentalsHandler("META", response);
+	
 	
 
     return 0;
