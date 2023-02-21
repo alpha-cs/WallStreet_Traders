@@ -100,7 +100,7 @@ size_t td_ameritrade_api::write_callback(void *ptr, size_t size, size_t nmemb, v
  */
 std::string td_ameritrade_api::build_url_get_price_history(std::string symbol, std::string apikey, std::string endDate)
 {
-    return base_url + symbol + "/pricehistory?apikey=" + apikey + "&periodType=day&period=10&frequencyType=minute&frequency=1&endDate=" + endDate + "&needExtendedHoursData=true";
+    return base_url + symbol + "/pricehistory?apikey=" + apikey + "&periodType=day&period=1&frequencyType=minute&frequency=1&endDate=" + endDate + "&needExtendedHoursData=false";
 }
 
 /**
@@ -119,22 +119,25 @@ std::string td_ameritrade_api::test_http_request_get_price_history(bool show)
     td_ameritrade_api api_http_request_test;
     time_keeper unix_time(0);
 
-    DateTime* end_datetime = new DateTime[3];
-    DateTime* start_datetime = new DateTime[3];
+    DateTime* start_datetime = new DateTime[1];
+    DateTime* end_datetime = new DateTime[1];
 
-    end_datetime[0].year = 2023;
-    end_datetime[0].month = 1;
-    end_datetime[0].day = 24;
-    end_datetime[0].hour = 0;
-    end_datetime[0].minute = 0;
-    end_datetime[0].second = 0;
     start_datetime[0].year = 2023;
     start_datetime[0].month = 1;
     start_datetime[0].day = 23;
-    start_datetime[0].hour = 0;
-    start_datetime[0].minute = 0;
+    start_datetime[0].hour = 10;
+    start_datetime[0].minute = 1;
     start_datetime[0].second = 0;
 
+    end_datetime[0].year = 2023;
+    end_datetime[0].month = 1;
+    end_datetime[0].day = 23;
+    end_datetime[0].hour = 10;
+    end_datetime[0].minute = 5;
+    end_datetime[0].second = 0;
+
+
+    /*
     end_datetime[1].year = 2023;
     end_datetime[1].month = 1;
     end_datetime[1].day = 18;
@@ -148,9 +151,10 @@ std::string td_ameritrade_api::test_http_request_get_price_history(bool show)
     start_datetime[2].year = 2023;
     start_datetime[2].month = 1;
     start_datetime[2].day = 9;
+	*/
 
     std::string price_history;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 1; i++)
     {
         std::string end_unix = unix_time.date_to_unix_time_pst(end_datetime[i]);
         std::string start_unix = unix_time.date_to_unix_time_pst(start_datetime[i]);

@@ -32,7 +32,7 @@ load_sql_database::~load_sql_database()
 
 void load_sql_database::make_sql_table()
 {
-	std::string sql_table[] = {makeTable_company_fundamental, makeTable_td_price_history_day, makeTable_td_price_history_minute};
+	std::string sql_table[] = { makeTable_company_fundamental, makeTable_td_price_history_minute, makeTable_td_price_history_daily, makeTable_td_price_history_weekly, makeTable_td_price_history_monthly};
 	for (int i = 0; i < sizeof_sql_tdameritrade_table; i++)
 	{
 		if ((sql_table_status & (1 << i)) == 0)
@@ -72,9 +72,17 @@ dbStatus load_sql_database::check_table(const std::string &table_name)
 			{
 				return 1 << td_price_history_minute;
 			}
-			else if (table_name == "td_price_history_day")
+			else if (table_name == "td_price_history_daily")
 			{
-				return 1 << td_price_history_day;
+				return 1 << td_price_history_daily;
+			}
+			else if (table_name == "td_price_history_weekly")
+			{
+				return 1 << td_price_history_weekly;
+			}
+			else if (table_name == "td_price_history_monthly")
+			{
+				return 1 << td_price_history_monthly;
 			}
 		}
 	}
@@ -100,22 +108,30 @@ dbStatus load_sql_database::check_company_fundamental()
 {
 	return check_table(("company_fundamental"));
 }
-
-dbStatus load_sql_database::check_td_price_history_day()
-{
-	return check_table("td_price_history_day");
-}
-
 dbStatus load_sql_database::check_td_price_history_minute()
 {
 	return check_table("td_price_history_minute");
+}
+dbStatus load_sql_database::check_td_price_history_daily()
+{
+	return check_table("td_price_history_daily");
+}
+dbStatus load_sql_database::check_td_price_history_weekly()
+{
+	return check_table("td_price_history_weekly");
+}
+dbStatus load_sql_database::check_td_price_history_monthly()
+{
+	return check_table("td_price_history_monthly");
 }
 
 dbStatus load_sql_database::check_sql_tables()
 {
 	dbStatus status = 0;
 	status |= check_company_fundamental();
-	status |= check_td_price_history_day();
 	status |= check_td_price_history_minute();
+	status |= check_td_price_history_daily();
+	status |= check_td_price_history_weekly();
+	status |= check_td_price_history_monthly();
 	return status;
 }

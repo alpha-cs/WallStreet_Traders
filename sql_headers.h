@@ -16,7 +16,9 @@
 enum sql_tdameritrade_table
 {
 	company_fundamental = 0,
-	td_price_history_day,
 	td_price_history_minute,
+	td_price_history_daily,
+	td_price_history_weekly,
+	td_price_history_monthly,
 	sizeof_sql_tdameritrade_table
 };

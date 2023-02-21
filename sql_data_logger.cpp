@@ -103,6 +103,152 @@ void sql_data_logger::fundamentalsHandler(const std::string metadata_symbol, con
 	
 }
 
+/*
+{
+  "candles": [
+	{
+	  "open": 139.33,
+	  "high": 141.5,
+	  "low": 138.66,
+	  "close": 140.7974,
+	  "volume": 3266682,
+	  "datetime": 1674484200000
+	},
+	{
+	  "open": 140.84,
+	  "high": 141.99,
+	  "low": 140.665,
+	  "close": 141.9322,
+	  "volume": 1931593,
+	  "datetime": 1674486000000
+	},
+	{
+	  "open": 141.94,
+	  "high": 142.28,
+	  "low": 141.545,
+	  "close": 142.09,
+	  "volume": 1245903,
+	  "datetime": 1674487800000
+	},
+	{
+	  "open": 142.1,
+	  "high": 143.27,
+	  "low": 141.99,
+	  "close": 142.645,
+	  "volume": 1471935,
+	  "datetime": 1674489600000
+	},
+	{
+	  "open": 142.68,
+	  "high": 142.81,
+	  "low": 142.41,
+	  "close": 142.73,
+	  "volume": 1023768,
+	  "datetime": 1674491400000
+	},
+	{
+	  "open": 142.73,
+	  "high": 143.09,
+	  "low": 142.35,
+	  "close": 142.63,
+	  "volume": 1187357,
+	  "datetime": 1674493200000
+	},
+	{
+	  "open": 142.63,
+	  "high": 142.92,
+	  "low": 142.3,
+	  "close": 142.745,
+	  "volume": 1095486,
+	  "datetime": 1674495000000
+	},
+	{
+	  "open": 142.74,
+	  "high": 143.04,
+	  "low": 142.65,
+	  "close": 142.91,
+	  "volume": 837430,
+	  "datetime": 1674496800000
+	},
+	{
+	  "open": 142.92,
+	  "high": 143.16,
+	  "low": 142.3,
+	  "close": 142.445,
+	  "volume": 828275,
+	  "datetime": 1674498600000
+	},
+	{
+	  "open": 142.44,
+	  "high": 142.8819,
+	  "low": 142.2,
+	  "close": 142.675,
+	  "volume": 947825,
+	  "datetime": 1674500400000
+	},
+	{
+	  "open": 142.69,
+	  "high": 142.91,
+	  "low": 142.09,
+	  "close": 142.75,
+	  "volume": 1167767,
+	  "datetime": 1674502200000
+	},
+	{
+	  "open": 142.75,
+	  "high": 143.37,
+	  "low": 142.41,
+	  "close": 142.985,
+	  "volume": 1374991,
+	  "datetime": 1674504000000
+	},
+	{
+	  "open": 142.99,
+	  "high": 143.76,
+	  "low": 142.86,
+	  "close": 143.27,
+	  "volume": 2475754,
+	  "datetime": 1674505800000
+	}
+  ],
+  "symbol": "META",
+  "empty": false
+}
+*/
+void sql_data_logger::priceHistoryHandler(const std::string frequencyType, const std::string& response)
+{
+	Json::Value root;
+	Json::Reader reader;
+	bool parsingSuccessful = reader.parse(response, root);
+	if (!parsingSuccessful)
+	{
+		// report to the user the failure and their locations in the document.
+		std::cout << "Failed to parse configuration\n"
+			<< reader.getFormattedErrorMessages();
+		return;
+	}
+	
+	Json::Value metadata_candles = root["candles"];
+	priceHistory priceHistory;
+	priceHistory.frequencyType = frequencyType;
+	priceHistory.symbol = root["symbol"].asString();
+
+	for (int i = 0; i < metadata_candles.size(); i++)
+	{
+		priceHistory.open = metadata_candles[i]["open"].asDouble();
+		priceHistory.high = metadata_candles[i]["high"].asDouble();
+		priceHistory.low = metadata_candles[i]["low"].asDouble();
+		priceHistory.close = metadata_candles[i]["close"].asDouble();
+		priceHistory.volume = metadata_candles[i]["volume"].asUInt64();
+		priceHistory.datetime = metadata_candles[i]["datetime"].asUInt64();
+		priceHistoryLogger(priceHistory);
+	}
+}
+
+
+
+
+
 void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
 {
 	reset_auto_increment("`tdameritrade`.`company_fundamental`");
@@ -171,4 +317,49 @@ void sql_data_logger::fundamentalsLogger(Fundamental &metadata)
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
 	}
 	std::cout << std::endl;
+}
+
+void sql_data_logger::priceHistoryLogger(priceHistory& priceHistory)
+{
+	try
+	{
+		if (priceHistory.frequencyType == "Minute") {
+			reset_auto_increment("`tdameritrade`.`td_price_history_minute`");
+			sql_statement = sql_connection->prepareStatement(Minute_priceHistoryQuery);
+		}
+		else if (priceHistory.frequencyType == "Daily") {
+			reset_auto_increment("`tdameritrade`.`td_price_history_daily`");
+			sql_statement = sql_connection->prepareStatement(Daily_priceHistoryQuery);
+		}
+		else if (priceHistory.frequencyType == "Weekly") {
+			reset_auto_increment("`tdameritrade`.`td_price_history_weekly`");
+			sql_statement = sql_connection->prepareStatement(Weekly_priceHistoryQuery);
+		}
+		else if (priceHistory.frequencyType == "Monthly") {
+			reset_auto_increment("`tdameritrade`.`td_price_history_weekly`");
+			sql_statement = sql_connection->prepareStatement(Monthly_priceHistoryQuery);
+		}
+		else
+		{
+			std::cout << "Invalid frequency type" << std::endl; 
+		}
+		sql_statement->setString(1, priceHistory.symbol);
+		sql_statement->setDouble(2, priceHistory.open);
+		sql_statement->setDouble(3, priceHistory.high);
+		sql_statement->setDouble(4, priceHistory.low);
+		sql_statement->setDouble(5, priceHistory.close);
+		sql_statement->setUInt64(6, (priceHistory.volume));
+		sql_statement->setUInt64(7, (priceHistory.datetime));
+
+		sql_statement->execute();
+		sql_result = sql_statement->getResultSet();
+	}
+	catch (sql::SQLException& e)
+	{
+		std::cout << "# ERR: SQLException in " << __FILE__;
+		std::cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << std::endl;
+		std::cout << "# ERR: " << e.what();
+		std::cout << " (MySQL error code: " << e.getErrorCode();
+		std::cout << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+	}
 }

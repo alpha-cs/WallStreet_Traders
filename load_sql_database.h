@@ -6,8 +6,10 @@
 
 #define sql_database "tdameritrade"
 #define sql_table_company_fundamental "company_fundamental"
-#define sql_table_td_price_history_day "td_price_history_day"
 #define sql_table_td_price_history_minute "td_price_history_minute"
+#define sql_table_td_price_history_daily "td_price_history_daily"
+#define sql_table_td_price_history_weekly "td_price_history_weekly"
+#define sql_table_td_price_history_monthly "td_price_history_monthly"
 
 typedef uint8_t dbStatus;
 
@@ -19,8 +21,11 @@ public:
 	void make_sql_table();
 	dbStatus check_sql_tables();
 	dbStatus check_company_fundamental();
-	dbStatus check_td_price_history_day();
 	dbStatus check_td_price_history_minute();
+	dbStatus check_td_price_history_daily();
+	dbStatus check_td_price_history_weekly();
+	dbStatus check_td_price_history_monthly();
+	
 
 	dbStatus check_table(const std::string &table_name);
 	dbStatus get_required_table_status();
@@ -90,7 +95,7 @@ private:
 												"UNIQUE KEY `symbol` (`symbol`) "
 												") ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
 	
-	std::string makeTable_td_price_history_day = "CREATE TABLE tdameritrade.td_price_history_day ( "
+	std::string makeTable_td_price_history_daily = "CREATE TABLE tdameritrade.td_price_history_daily ( "
 												 "ID int unsigned NOT NULL AUTO_INCREMENT, "
 												 "symbol varchar(50) NOT NULL, "
 												 "open double NOT NULL, "
@@ -117,4 +122,32 @@ private:
 													"FOREIGN KEY (symbol) REFERENCES company_fundamental (symbol), "
 													"UNIQUE KEY ID (ID) "
 													") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+	
+	std::string makeTable_td_price_history_weekly = "CREATE TABLE tdameritrade.td_price_history_weekly ( "
+		"ID int unsigned NOT NULL AUTO_INCREMENT, "
+		"symbol varchar(50) NOT NULL, "
+		"open double NOT NULL, "
+		"high double NOT NULL, "
+		"low double NOT NULL, "
+		"close double NOT NULL, "
+		"volume bigint unsigned NOT NULL, "
+		"datetime bigint unsigned NOT NULL, "
+		"PRIMARY KEY (ID), "
+		"FOREIGN KEY (symbol) REFERENCES company_fundamental (symbol), "
+		"UNIQUE KEY ID (ID) "
+		") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+	
+	std::string makeTable_td_price_history_monthly = "CREATE TABLE tdameritrade.td_price_history_monthly ( "
+		"ID int unsigned NOT NULL AUTO_INCREMENT, "
+		"symbol varchar(50) NOT NULL, "
+		"open double NOT NULL, "
+		"high double NOT NULL, "
+		"low double NOT NULL, "
+		"close double NOT NULL, "
+		"volume bigint unsigned NOT NULL, "
+		"datetime bigint unsigned NOT NULL, "
+		"PRIMARY KEY (ID), "
+		"FOREIGN KEY (symbol) REFERENCES company_fundamental (symbol), "
+		"UNIQUE KEY ID (ID) "
+		") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
 };

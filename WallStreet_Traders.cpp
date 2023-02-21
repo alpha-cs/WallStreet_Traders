@@ -15,16 +15,18 @@ int main(int, char **)
     return 0; });
     database_future.wait();
 
-	//functionality
 
 
+    ///////////////////////////////////////////////////////////////////////////////
+    //functionality Test
 	td_ameritrade_api api;
-    //std::string response = api.test_http_request_get_search_instruments(0);
-    std::string response = api.test_http_request_get_price_history(1);
+    std::string response1 = api.test_http_request_get_price_history(1);
+    std::string response2 = api.test_http_request_get_search_instruments(1);
 	sql_data_logger logger;
-    //logger.fundamentalsHandler("META", response);
-	
-	
+    logger.fundamentalsHandler("META", response2);
+	logger.priceHistoryHandler("Minute", response1);
+    ///////////////////////////////////////////////////////////////////////////////
+    //functionality Test
 
     return 0;
 }
